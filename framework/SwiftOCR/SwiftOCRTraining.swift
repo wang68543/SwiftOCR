@@ -88,7 +88,7 @@ open class SwiftOCRTraining {
             return OCRFont(name: randomFontName(), size: 45 + randomFloat(5))!
         }
     
-        let randomFontAttributes: () -> [NSAttributedStringKey: Any] = {
+        let randomFontAttributes: () -> [NSAttributedString.Key: Any] = {
             
             let paragraphStyle       = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
             paragraphStyle.alignment = NSTextAlignment.center
@@ -191,7 +191,7 @@ open class SwiftOCRTraining {
                     let imageData = ocrInstance.convertImageToFloatArray(blob.0)
                     
                     var imageAnswer = [Float](repeating: 0, count: recognizableCharacters.count)
-                    if let index = Array(recognizableCharacters).index(of: Array(code)[blobIndex]) {
+                    if let index = Array(recognizableCharacters).firstIndex(of: Array(code)[blobIndex]) {
                         imageAnswer[index] = 1
                     }
                     
@@ -275,7 +275,7 @@ open class SwiftOCRTraining {
                         let imageData = ocrInstance.convertImageToFloatArray(blob.0)
                         
                         var imageAnswer = [Float](repeating: 0, count: recognizableCharacters.count)
-                        if let index = Array(recognizableCharacters).index(of: characters[blobIndex]) {
+                        if let index = Array(recognizableCharacters).firstIndex(of: characters[blobIndex]) {
                             imageAnswer[index] = 1
                         }
                         
@@ -317,8 +317,8 @@ open class SwiftOCRTraining {
             do {
                 let networkResult = try globalNetwork.update(inputs: i.0)
                 
-                let input      = Array(recognizableCharacters)[i.1.index(of: 1)!]
-                let recognized = Array(recognizableCharacters)[networkResult.index(of: networkResult.max() ?? 0) ?? 0]
+                let input      = Array(recognizableCharacters)[i.1.firstIndex(of: 1)!]
+                let recognized = Array(recognizableCharacters)[networkResult.firstIndex(of: networkResult.max() ?? 0) ?? 0]
                 
                 print(input, recognized)
                 

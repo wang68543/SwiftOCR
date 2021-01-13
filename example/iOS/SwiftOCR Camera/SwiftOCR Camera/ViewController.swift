@@ -201,6 +201,8 @@ extension ViewController {
             context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: width, height: height))
         case .down, .downMirrored:
             context?.draw(cgImage, in: CGRect(x: -width, y: -height, width: width, height: height))
+        @unknown default:
+            break
         }
         
         let calculatedFrame = CGRect(x: 0, y: CGFloat((height - cropSize.height)/2.0), width: cropSize.width, height: cropSize.height)

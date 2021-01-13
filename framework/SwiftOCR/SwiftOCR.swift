@@ -309,7 +309,7 @@ open class SwiftOCR {
         
         for label in 0...currentLabel {
             if label != 255 {
-                labelUnionSetOfXArray[label] = parentArray.index(of: labelsUnion.setOf(label) ?? 255)
+                labelUnionSetOfXArray[label] = parentArray.firstIndex(of: labelsUnion.setOf(label) ?? 255)
             }
         }
         
@@ -577,7 +577,7 @@ open class SwiftOCR {
             dodgeBlendFilter.useNextFrameForImageCapture()
             image?.processImage()
             
-            var processedImage:OCRImage? = dodgeBlendFilter.imageFromCurrentFramebuffer(with: UIImageOrientation.up)
+            var processedImage:OCRImage? = dodgeBlendFilter.imageFromCurrentFramebuffer(with: UIImage.Orientation.up)
             
             while processedImage?.size == CGSize.zero || processedImage == nil {
                 dodgeBlendFilter.useNextFrameForImageCapture()
@@ -619,7 +619,7 @@ open class SwiftOCR {
         thresholdFilter.useNextFrameForImageCapture()
         picture?.processImage()
         
-        var processedImage:OCRImage? = thresholdFilter.imageFromCurrentFramebuffer(with: UIImageOrientation.up)
+        var processedImage:OCRImage? = thresholdFilter.imageFromCurrentFramebuffer(with: UIImage.Orientation.up)
         
         while processedImage == nil || processedImage?.size == CGSize.zero {
             thresholdFilter.useNextFrameForImageCapture()
