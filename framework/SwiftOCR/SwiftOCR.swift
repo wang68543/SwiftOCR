@@ -309,7 +309,7 @@ open class SwiftOCR {
         
         for label in 0...currentLabel {
             if label != 255 {
-                labelUnionSetOfXArray[label] = parentArray.firstIndex(of: labelsUnion.setOf(label) ?? 255)
+                labelUnionSetOfXArray[label] = parentArray.index(of: labelsUnion.setOf(label) ?? 255)
             }
         }
         
@@ -577,14 +577,7 @@ open class SwiftOCR {
             dodgeBlendFilter.useNextFrameForImageCapture()
             image?.processImage()
             
-            #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
-            let orientationUp = UIImage.Orientation.up
-            #else
-            //GPUImage is using a re-definition of the UIImageOrientation for Mac compilation
-            let orientationUp = UIImageOrientation.up
-            #endif
-            
-            var processedImage:OCRImage? = dodgeBlendFilter.imageFromCurrentFramebuffer(with: orientationUp)
+            var processedImage:OCRImage? = dodgeBlendFilter.imageFromCurrentFramebuffer(with: UIImageOrientation.up)
             
             while processedImage?.size == CGSize.zero || processedImage == nil {
                 dodgeBlendFilter.useNextFrameForImageCapture()
@@ -626,14 +619,7 @@ open class SwiftOCR {
         thresholdFilter.useNextFrameForImageCapture()
         picture?.processImage()
         
-        #if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
-        let orientationUp = UIImage.Orientation.up
-        #else
-        //GPUImage is using a re-definition of the UIImageOrientation for Mac compilation
-        let orientationUp = UIImageOrientation.up
-        #endif
-        
-        var processedImage:OCRImage? = thresholdFilter.imageFromCurrentFramebuffer(with: orientationUp)
+        var processedImage:OCRImage? = thresholdFilter.imageFromCurrentFramebuffer(with: UIImageOrientation.up)
         
         while processedImage == nil || processedImage?.size == CGSize.zero {
             thresholdFilter.useNextFrameForImageCapture()
